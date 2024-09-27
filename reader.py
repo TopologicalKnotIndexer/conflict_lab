@@ -161,14 +161,27 @@ def get_chiral_hom_stat(): # kho 的手性区分能力
     wrong = 0
     wrong_list = []
     for prime in cps:
-        kho_1 = get_combined_data().get(prime).get("hom")
-        kho_2 = get_combined_data().get("m" + prime).get("hom")
-        assert kho_1 is not None and kho_2 is not None
+        hom_1 = get_combined_data().get(prime).get("hom")
+        hom_2 = get_combined_data().get("m" + prime).get("hom")
+        assert hom_1 is not None and hom_2 is not None
         total += 1
-        if kho_1 == kho_2:
+        if hom_1 == hom_2:
             wrong += 1
             wrong_list.append(prime)
     print("get_chiral_hom_stat", "total:", total, "wrong:", wrong, wrong_list)
+
+def get_chiral_vol_stat(): # vol 的手性区分能力
+    cps = get_chiral_prime()
+    total = 0
+    wrong = 0
+    for prime in cps:
+        vol_1 = get_combined_data().get(prime).get("vol")
+        vol_2 = get_combined_data().get("m" + prime).get("vol")
+        assert vol_1 is not None and vol_2 is not None
+        total += 1
+        if abs(float(vol_1) - float(vol_2)) < EPS:
+            wrong += 1
+    print("get_chiral_vol_stat", "total:", total, "wrong:", wrong)
 
 def main():
     get_kho_stat()
@@ -179,6 +192,7 @@ def main():
     get_prime_stat()
     get_chiral_kho_stat()
     get_chiral_hom_stat()
+    get_chiral_vol_stat() # 看乐子
 
 if __name__ == "__main__":
     main()
