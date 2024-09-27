@@ -121,12 +121,64 @@ def get_col_stat2(): # 基于 volume 的第二种区分方式
             assert vol_val == "0.000" # 确实是零等价类
     print("get_col_stat2", len(vol_to_name), cnt_stat)
 
+def get_prime_stat(): # 统计素扭结中有多少个有手性，有多少个没有手性。
+    ps = get_prime_knot_set()
+    chiral = []
+    amchiral = []
+    for prime in ps:
+        if get_combined_data().get("m" + prime) is not None:
+            chiral.append(prime)
+        else:
+            amchiral.append(prime)
+    print("get_prime_stat", "chiral:", len(chiral), "amchiral:", len(amchiral))
+
+def get_chiral_prime(): # 获得手性素扭结列表
+    ps = get_prime_knot_set()
+    chiral = []
+    for prime in ps:
+        if get_combined_data().get("m" + prime) is not None:
+            chiral.append(prime)
+    return chiral
+
+def get_chiral_kho_stat(): # kho 的手性区分能力
+    cps = get_chiral_prime()
+    total = 0
+    wrong = 0
+    wrong_list = []
+    for prime in cps:
+        kho_1 = get_combined_data().get(prime).get("kho")
+        kho_2 = get_combined_data().get("m" + prime).get("kho")
+        assert kho_1 is not None and kho_2 is not None
+        total += 1
+        if kho_1 == kho_2:
+            wrong += 1
+            wrong_list.append(prime)
+    print("get_chiral_kho_stat", "total:", total, "wrong:", wrong, wrong_list)
+
+def get_chiral_hom_stat(): # kho 的手性区分能力
+    cps = get_chiral_prime()
+    total = 0
+    wrong = 0
+    wrong_list = []
+    for prime in cps:
+        kho_1 = get_combined_data().get(prime).get("hom")
+        kho_2 = get_combined_data().get("m" + prime).get("hom")
+        assert kho_1 is not None and kho_2 is not None
+        total += 1
+        if kho_1 == kho_2:
+            wrong += 1
+            wrong_list.append(prime)
+    print("get_chiral_hom_stat", "total:", total, "wrong:", wrong, wrong_list)
+
 def main():
     get_kho_stat()
     get_hom_stat()
     get_kho_hom_stat()
     get_vol_stat1()
     get_col_stat2()
+    get_prime_stat()
+    get_chiral_kho_stat()
+    get_chiral_hom_stat()
 
 if __name__ == "__main__":
     main()
