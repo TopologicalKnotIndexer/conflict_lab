@@ -20,7 +20,7 @@
   - [khovanov-reg.txt](./khovanov-reg.txt)
   - [volume_info_list-reg.txt](./volume_info_list-reg.txt)
   - 我们的一切分析基于上述三个文件。
-- 需要注意的是，其中 volume 的计算使用了 python snappy 中的 Manifold 类中的 volume 函数。
+- 需要注意的是，其中 volume 的计算使用了 python snappy（version 3.1.1） 中的 Manifold 类中的 volume 函数。
   - 无论被计算的扭结是否是 hyperbolic knot,该函数往往能计算出一个实数作为结果。
     - 根据本文作者的观察，计算素扭结的 volume 时，**对于 non-hyperbolic-knot，该函数的返回值往往接近于零**。
   - 由于这些行为与我们对扭结补空间的体积的理解不符，因此本文作者强烈建议不要使用该函数作为区分扭结的依据。
