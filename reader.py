@@ -86,6 +86,13 @@ def get_prime_knot_set(): # 返回不考虑手性意义下的素扭结序列, 80
             arr.append(knotname)
     return sorted(arr) 
 
+def get_non_prime_knot_set(): # 得到非素扭结集合
+    arr = []
+    for knotname in get_combined_data():
+        if knotname.find(",") != -1:
+            arr.append(knotname)
+    return arr
+
 EPS = 1e-4
 def get_vol_stat1(): # 基于 volume 的第一种区分方式
     ps = get_prime_knot_set()
@@ -183,6 +190,25 @@ def get_chiral_vol_stat(): # vol 的手性区分能力
             wrong += 1
     print("get_chiral_vol_stat", "total:", total, "wrong:", wrong)
 
+def get_deprecated_kho_hom_vol_stat(): # 不建议使用的分类方式
+    com_to_name = {}
+    for knotname in get_non_prime_knot_set():
+        hom_val = get_combined_data().get(knotname).get("hom")
+        kho_val = get_combined_data().get(knotname).get("kho")
+        vol_val = "%.3f" % float(get_combined_data().get(knotname).get("vol"))
+        com_val = "[%s|%s|%s]" % (hom_val, kho_val, vol_val)
+        if com_to_name.get(com_val) is None:
+            com_to_name[com_val] = []
+        com_to_name[com_val].append(knotname)
+    cnt_stat = {}
+    for hom_val in com_to_name:
+        name_list = com_to_name[hom_val]
+        len_now = len(name_list)
+        if cnt_stat.get(len_now) is None:
+            cnt_stat[len_now] = 0
+        cnt_stat[len_now] += 1
+    print("get_deprecated_kho_hom_vol_stat", len(com_to_name), cnt_stat)
+
 def main():
     get_kho_stat()
     get_hom_stat()
@@ -193,6 +219,7 @@ def main():
     get_chiral_kho_stat()
     get_chiral_hom_stat()
     get_chiral_vol_stat() # 看乐子
+    get_deprecated_kho_hom_vol_stat() # 不建议使用
 
 if __name__ == "__main__":
     main()
