@@ -1,7 +1,9 @@
 import os
+import json
 import functools
 dirnow = os.path.dirname(os.path.abspath(__file__))
-os.chdir(dirnow)
+os.chdir(dirnow) # 工作目录切换到脚本所在目录
+os.makedirs("json", exist_ok=True)
 
 def load_database(filepath: str, l_is_name: bool): # 加载数据
     info = {}
@@ -29,6 +31,23 @@ def get_combined_data(): # 获得联合数据信息
     assert len(combined) == 1783
     return combined
 
+# 将冲突信息数据保存到文件
+# 返回 k 元素等价类统计结果
+def get_cnt_stat(raw_dict_to_name, dump_file_name: str):
+    arr = []
+    cnt_stat = {}
+    for d_val in raw_dict_to_name:
+        name_list = raw_dict_to_name[d_val]
+        len_now = len(name_list)
+        if cnt_stat.get(len_now) is None:
+            cnt_stat[len_now] = 0
+        cnt_stat[len_now] += 1
+        arr.append(raw_dict_to_name[d_val])
+    arr = sorted(arr, key=lambda x:len(x)) # 按照元素个数从小到大排序
+    with open(os.path.join("json", dump_file_name), "w", encoding="utf-8") as fp:
+        json.dump(arr, fp, indent=4)
+    return cnt_stat
+
 def get_kho_stat(): # 仅仅使用 kho 作为区分时的统计信息
     kho_to_name = {}
     for knotname in get_combined_data():
@@ -36,13 +55,7 @@ def get_kho_stat(): # 仅仅使用 kho 作为区分时的统计信息
         if kho_to_name.get(kho_val) is None:
             kho_to_name[kho_val] = []
         kho_to_name[kho_val].append(knotname)
-    cnt_stat = {}
-    for kho_val in kho_to_name:
-        name_list = kho_to_name[kho_val]
-        len_now = len(name_list)
-        if cnt_stat.get(len_now) is None:
-            cnt_stat[len_now] = 0
-        cnt_stat[len_now] += 1
+    cnt_stat = get_cnt_stat(kho_to_name, "get_kho_stat.json")
     print("get_kho_stat", len(kho_to_name), cnt_stat)
 
 def get_hom_stat(): # 仅仅使用 hom 作为区分时的统计信息
@@ -52,13 +65,7 @@ def get_hom_stat(): # 仅仅使用 hom 作为区分时的统计信息
         if hom_to_name.get(hom_val) is None:
             hom_to_name[hom_val] = []
         hom_to_name[hom_val].append(knotname)
-    cnt_stat = {}
-    for hom_val in hom_to_name:
-        name_list = hom_to_name[hom_val]
-        len_now = len(name_list)
-        if cnt_stat.get(len_now) is None:
-            cnt_stat[len_now] = 0
-        cnt_stat[len_now] += 1
+    cnt_stat = get_cnt_stat(hom_to_name, "get_hom_stat.json")
     print("get_hom_stat", len(hom_to_name), cnt_stat)
 
 def get_kho_hom_stat(): # 联合使用 hom 和 kho 作为区分时的统计信息
@@ -70,13 +77,7 @@ def get_kho_hom_stat(): # 联合使用 hom 和 kho 作为区分时的统计信�
         if com_to_name.get(com_val) is None:
             com_to_name[com_val] = []
         com_to_name[com_val].append(knotname)
-    cnt_stat = {}
-    for com_val in com_to_name:
-        name_list = com_to_name[com_val]
-        len_now = len(name_list)
-        if cnt_stat.get(len_now) is None:
-            cnt_stat[len_now] = 0
-        cnt_stat[len_now] += 1
+    cnt_stat = get_cnt_stat(com_to_name, "get_kho_hom_stat.json")
     print("get_kho_hom_stat", len(com_to_name), cnt_stat)
 
 def get_deprecated_kho_hom_vol_stat(): # 不建议使用
@@ -89,13 +90,7 @@ def get_deprecated_kho_hom_vol_stat(): # 不建议使用
         if com_to_name.get(com_val) is None:
             com_to_name[com_val] = []
         com_to_name[com_val].append(knotname)
-    cnt_stat = {}
-    for com_val in com_to_name:
-        name_list = com_to_name[com_val]
-        len_now = len(name_list)
-        if cnt_stat.get(len_now) is None:
-            cnt_stat[len_now] = 0
-        cnt_stat[len_now] += 1
+    cnt_stat = get_cnt_stat(com_to_name, "get_deprecated_kho_hom_vol_stat.json")
     print("get_deprecated_kho_hom_vol_stat", len(com_to_name), cnt_stat)
 
 
@@ -138,14 +133,7 @@ def get_col_stat2(): # 基于 volume 的第二种区分方式
         if vol_to_name.get(vol_val) is None:
             vol_to_name[vol_val] = []
         vol_to_name[vol_val].append(knotname)
-    cnt_stat = {}
-    for vol_val in vol_to_name:
-        cnt_now = len(vol_to_name[vol_val])
-        if cnt_stat.get(cnt_now) is None:
-            cnt_stat[cnt_now] = 0
-        cnt_stat[cnt_now] += 1
-        if cnt_now >= 7:
-            assert vol_val == "0.000" # 确实是零等价类
+    cnt_stat = get_cnt_stat(vol_to_name, "get_col_stat2.json")
     print("get_col_stat2", len(vol_to_name), cnt_stat)
 
 def get_prime_stat(): # 统计素扭结中有多少个有手性，有多少个没有手性。
@@ -219,13 +207,7 @@ def get_kho_hom_non_prime_stat():
         if com_to_name.get(com_val) is None:
             com_to_name[com_val] = []
         com_to_name[com_val].append(knotname)
-    cnt_stat = {}
-    for hom_val in com_to_name:
-        name_list = com_to_name[hom_val]
-        len_now = len(name_list)
-        if cnt_stat.get(len_now) is None:
-            cnt_stat[len_now] = 0
-        cnt_stat[len_now] += 1
+    cnt_stat = get_cnt_stat(com_to_name, "get_kho_hom_non_prime_stat.json")
     print("get_kho_hom_non_prime_stat", len(com_to_name), cnt_stat)
 
 def get_deprecated_kho_hom_vol_non_prime_stat(): # 不建议使用的分类方式
@@ -238,13 +220,7 @@ def get_deprecated_kho_hom_vol_non_prime_stat(): # 不建议使用的分类方�
         if com_to_name.get(com_val) is None:
             com_to_name[com_val] = []
         com_to_name[com_val].append(knotname)
-    cnt_stat = {}
-    for hom_val in com_to_name:
-        name_list = com_to_name[hom_val]
-        len_now = len(name_list)
-        if cnt_stat.get(len_now) is None:
-            cnt_stat[len_now] = 0
-        cnt_stat[len_now] += 1
+    cnt_stat = get_cnt_stat(com_to_name, "get_deprecated_kho_hom_vol_non_prime_stat.json")
     print("get_deprecated_kho_hom_vol_non_prime_stat", len(com_to_name), cnt_stat)
 
 def main():

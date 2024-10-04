@@ -45,6 +45,7 @@
   - 二元等价类 167 个。
   - 三元等价类 32 个。
   - 四元等价类 1 个。
+  - 具体冲突情况可以参考 [get_kho_stat.json](./json/get_kho_stat.json)
 - 在算法上我们使用了 JavaKhV2 作为 khovanov 同调的计算程序。
   - 相比于 HOMFLY-PT 多项式以及 volume 的计算算法而言，该程序在时间复杂度与空间复杂度上都相对稳定。
   - 因此 khovanov 同调作为我们在**实践中**最主要的使用的扭结区分工具。
@@ -60,6 +61,7 @@
   - 其中包含一元等价类 1559  个（即，不冲突的情况）。
   - 二元等价类 106 个。
   - 三元等价类 4 个。
+  - 具体冲突情况可以参考 [get_hom_stat.json](./json/get_hom_stat.json)
 - 因此，我们可以不太严谨得说，在小于等于 11 crossing 的扭结上 HOMFLY-PT 多项式对扭结的区分能力与 khovanov 同调基本一致。
   - 甚至略强于 khovanov 同调。
 - 但需要注意到的是，我们使用了来自 sagemath 的计算的 HOMFLY-PT 多项式的算法。
@@ -72,7 +74,8 @@
   - 其中包含一元等价类 1575  个（即，不冲突的情况）。
   - 二元等价类 98 个。
   - 三元等价类 4 个。
-
+  - 具体冲突情况可以参考 [get_kho_hom_stat.json](./json/get_kho_hom_stat.json)
+  
 - 可以看到 HOMFLY-PT 多项式的引入确实有助于扭结的区分。
   - 与仅使用 khovanov 同调相比，在 HOMFLY-PT 多项式引入后，一元等价类数量略有增多，二元等价类数量略有减少。
 
@@ -83,6 +86,7 @@
 - 联合使用三种扭结不变量将 1783 种扭结划分为了 1747 个等价类。
   - 其中包含一元等价类 1711 个。
   - 二元等价类 36 个。
+  - 具体冲突情况可以参考 [get_deprecated_kho_hom_vol_stat.json](./json/get_deprecated_kho_hom_vol_stat.json)
 
 ## 使用 volume 区分扭结
 
@@ -127,6 +131,7 @@
   - 二元的等价类 44 个。
   - 三元的等价类 1 个。
   - 七元等价类 1 个（这个等价类即 volume 等于零对应的的等价类，具体原因详见序言）。
+  - 具体冲突情况可参考 [get_col_stat2.json](./json/get_col_stat2.json)
 
 ## 针对手性的区分能力
 
