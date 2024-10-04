@@ -1,9 +1,12 @@
 get_kho_stat 1549 {1: 1349, 2: 167, 3: 32, 4: 1}
 get_hom_stat 1669 {1: 1559, 2: 106, 3: 4}
 get_kho_hom_stat 1677 {1: 1575, 2: 98, 3: 4}
+get_deprecated_kho_hom_vol_stat 1747 {1: 1711, 2: 36}
 get_vol_stat1 total_cnt: 320400  wrong_cnt: 45
 get_col_stat2 749 {1: 703, 2: 44, 7: 1, 3: 1}
 get_prime_stat chiral: 781 amchiral: 20
 get_chiral_kho_stat total: 781 wrong: 4 ['K10a104', 'K10a48', 'K10a71', 'K10a91']
 get_chiral_hom_stat total: 781 wrong: 8 ['K10a104', 'K10a48', 'K10a71', 'K10a91', 'K10n2', 'K11n24', 'K11n82', 'K9n1']
 get_chiral_vol_stat total: 781 wrong: 781
+get_kho_hom_non_prime_stat 200 {1: 200}
+get_deprecated_kho_hom_vol_non_prime_stat 200 {1: 200}
