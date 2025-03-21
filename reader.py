@@ -93,7 +93,6 @@ def get_deprecated_kho_hom_vol_stat(): # 不建议使用
     cnt_stat = get_cnt_stat(com_to_name, "get_deprecated_kho_hom_vol_stat.json")
     print("get_deprecated_kho_hom_vol_stat", len(com_to_name), cnt_stat)
 
-
 def get_prime_knot_set(): # 返回不考虑手性意义下的素扭结序列, 801 种
     arr = []
     for knotname in get_combined_data():
