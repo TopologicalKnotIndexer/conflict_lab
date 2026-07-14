@@ -182,3 +182,16 @@ JSON outputs should remain unchanged. Paths are resolved relative to this
 repository without changing the caller's working directory.
 
 No PyPI publishing step is part of this project.
+
+## Citation
+
+If you use this repository in academic work, please cite it as:
+
+```bibtex
+@software{topologicalknotindexer_conflict_lab,
+  author = {{TopologicalKnotIndexer contributors}},
+  title = {{conflict\_lab}},
+  year = {2026},
+  url = {https://github.com/TopologicalKnotIndexer/conflict_lab}
+}
+```
